@@ -3,7 +3,7 @@
 const express = require('express')
 const sassMiddleware = require('node-sass-middleware')
 const app = express()
-const port = 8080
+const port = process.env.PORT || 8080 // använd porten eller annars 8080
 const productItem = require('../model/product')
 
 const ROUTE = {
@@ -16,16 +16,18 @@ const VIEW = {
     gallery: 'gallery',
     product: 'product'
 }
-
+if (process.env.NODE_ENV == 'development'){
+    const sassMiddleware = require('node-sass-middleware')
 app.use(sassMiddleware({ // tell sassMiddleware where src file and dest directory is
     src: 'sass',
     dest: 'public',
     // debug: true, // för att skriva ut data till konsollen
     outputStyle: 'compressed'
-}))
+    }))
+}
+
 // define a static folder, 'public'
 app.use(express.static('public'))
-// 
 app.use(express.urlencoded({ extended: true }));
 // define what view engine to use, ejs in this case
 app.set('view engine', 'ejs')
@@ -55,3 +57,10 @@ app.post(ROUTE.addProduct, (req, res) => {
 })
 
 module.exports = { app, port, express }
+
+class Enklass{
+    constructor(){
+        this.name = 'Klassens namns'
+    }
+    }
+    const enKlass = new Enklass();
